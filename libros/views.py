@@ -23,4 +23,5 @@ def horas_adelante(request, offset):
 
 def lista_biblioteca(request):
     db = psycopg2.connect(database='librosdb',user='victor',password='1325164',host='localhost')
-    
+    cursor = db.cursor()
+    cursor.execute('SELECT')
