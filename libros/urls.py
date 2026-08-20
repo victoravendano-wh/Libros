@@ -16,9 +16,14 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from .views import hola
+# from .views import hola, fecha_actual
+from .views import fecha_actual, horas_adelante
+
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^hola$', hola),
+    url(r'^fecha/$', fecha_actual, name="hora-actual"),
+    url(r'^fecha/mas/(\d{1,2})/$', horas_adelante, name="fecha-adelantada"),
+    # url(r'^hola$', hola),
 ]
