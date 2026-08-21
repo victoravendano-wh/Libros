@@ -1,0 +1,33 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+  Buscar
+{% endblock %}
+
+{% block header %}
+  <h2>Busqueda</h2>
+{% endblock %}
+
+{% block content %}
+  {% if error %}
+    <form action="" method="GET">
+      <div class="input-group-prepend">
+        <input type="text" name="q" class="form-control is-invalid" />
+        <input type="submit" value="buscar" />
+        {% for err in error %}
+          <div class="invalid-feedback">{{ err }}</div>
+        {% endfor %}
+      </div>
+    </form>
+  {% else %}
+    <form action="" method="GET">
+      <div class="input-group-prepend"></div>
+      <input type="text" name="q" class="form-control" />
+      <input type="submit" value="buscar" />
+    </form>
+  {% endif %}
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

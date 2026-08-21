@@ -1,15 +1,9 @@
-{% extends "base/base.html" %}
+{% extends 'base/base.html' %}
 
 {% block title %}
-
-    Fecha futura
-
-{% endblock title %}
-
+  Fecha futura
+{% endblock %}
 
 {% block content %}
-
-    <h4>En {{horas}} hora(s), la fecha será: {{hora_siguiente}}}</h4>
-
-{% endblock content %}
-a
+  <h4>En {{ horas }} hora(s), la fecha será: {{ hora_siguiente }}}</h4>
+{% endblock %}

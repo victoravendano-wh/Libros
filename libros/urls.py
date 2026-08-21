@@ -13,8 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
+
 
 # from .views import hola, fecha_actual
 from .views import fecha_actual, horas_adelante
@@ -25,5 +26,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^fecha/$', fecha_actual, name="hora-actual"),
     url(r'^fecha/mas/(\d{1,2})/$', horas_adelante, name="fecha-adelantada"),
+    url(r'^', include('apps.biblioteca.urls', namespace="app_libreria")),
     # url(r'^hola$', hola),
 ]

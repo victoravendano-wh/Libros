@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+  Contacto
+{% endblock %}
+
+{% block header %}
+  <h2>Contactanos</h2>
+{% endblock %}
+
+{% block content %}
+  {% if errors %}
+    <ul>
+      {% for erorr in erorrs %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+
+  {% endif %}
+
+  <form action="/contactanos/" method="POST">
+    {% csrf_token %}
+
+    <p>
+      Asunto:<input type="text" name="asunto" />
+    </p>
+    <p>
+      Email(opcionar):<input type="text" name="email" />
+    </p>
+    <p>
+      Mensaje:<textarea name="mensaje" rows="10" cols="50"></textarea>
+    </p>
+    <input type="submit" value="Enviar" />
+  </form>
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
