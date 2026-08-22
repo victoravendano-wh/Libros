@@ -15,63 +15,54 @@
         <li>{{ error }}</li>
       {% endfor %}
     </ul>
-
   {% endif %}
 
   <form action="/contacto/" method="POST">
     {% csrf_token %}
 
     <p>
-      Asunto:<input type="text" name="asunto" placeholder="contacto" value="{{asunto}}"/>
+      Asunto:<input type="text" name="asunto" placeholder="contacto" value="{{ asunto }}" />
     </p>
     <p>
-      Email(opcionar):<input type="text" name="email" placeholder="example@correo.com" value="{{email}}"/>
+      Email(opcionar):<input type="text" name="email" placeholder="example@correo.com" value="{{ email }}" />
     </p>
     <p>
-      Mensaje:<textarea name="mensaje" rows="10" cols="50" placeholder="Escribe aquí tus dudas, donaciones, sugerencias de libros o reportes sobre el catálogo digital...">{{mensaje}}</textarea>
+      Mensaje:<textarea name="mensaje" rows="10" cols="50" placeholder="Escribe aquí tus dudas, donaciones, sugerencias de libros o reportes sobre el catálogo digital...">{{ mensaje }}</textarea>
     </p>
     <input type="submit" value="Enviar" />
   </form> {% endcomment %}
 
+  {% if form.errors %}
+    <p style="color:red;">Por favor corrige lo siguiente:</p>
+  {% endif %}
 
-{% if form.errors %}
-
-  <p style="color:red;">Por favor corrige lo siguiente:</p>
-
-{% endif %}
-
-  <form action="" method="POST"> {% csrf_token %}
+  <form action="" method="POST">
+    {% csrf_token %}
 
     <div class="field">
+      <label for="id_asunto">Asunto:</label>
+      {{ form.asunto }}
 
-      <label for="id_asunto">Asunto: </label>
-      {{form.asunto}}
-      
-      {{form.asunto.errors}}
+      {{ form.asunto.errors }}
     </div>
 
     <div class="field">
-
-      <label for="id_email">Email: </label>
-      {{form.email}}
-      {{form.email.errors}}
+      <label for="id_email">Email:</label>
+      {{ form.email }}
+      {{ form.email.errors }}
     </div>
 
     <div class="field">
+      <label for="id_mensaje">Mensaje:</label>
 
-      
-      <label for="id_mensaje">Mensaje: </label>
-      
-      {{form.mensaje}}
-      
-      {{form.mensaje.errors}}
+      {{ form.mensaje }}
+
+      {{ form.mensaje.errors }}
     </div>
 
-    <input type="submit" value="Enviar">
+    <input type="submit" value="Enviar" />
   </form>
-
-
-  {% endblock %}
+{% endblock %}
 
 {% block footer %}
 

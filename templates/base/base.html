@@ -1,22 +1,41 @@
 {% load staticfiles %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
+    <link rel="shortcut icon" href="{% static 'resources/images.png' %}" type="image/x-icon" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
       {% block title %}
+
       {% endblock %}
     </title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
   </head>
   <body>
-    {% block header %}
-      <h1>Mi sitio</h1>
-    {% endblock %}
+    
+      <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary bg-black p-0">
+          <div class="container-fluid d-flex text-center text-bg-primary justify-content-center">
+           <span class="navbar-brand mb-0 h1 text-light"> {% block header %}Bienvenido{% endblock %}</span>
+          </div>
+        </nav>
+        <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a href="{% url 'app_libreria:busqueda' %}" class="nav-link">Buscar</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'app_libreria:contacto' %}" class="nav-link">Contacto</a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+    
 
     {% block content %}
+
     {% endblock %}
 
     {% block footer %}

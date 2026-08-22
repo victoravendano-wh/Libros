@@ -3,11 +3,12 @@ from django.contrib import admin
 
 
 # from .views import hola, fecha_actual
-from .views import  resultado, contactos
+from .views import  resultado, contactos, landing
 
 
 
 urlpatterns = [
-    url(r"^contacto/$", contactos, name=""),
-    url(r'^buscar/$', resultado, name='resultado'),
+    url(r"^$",landing, name="pagina-de-bienvenida"),
+    url(r"^contacto/$", contactos, name="contacto"),
+    url(r'^buscar/$', resultado, name='busqueda'),
 ]

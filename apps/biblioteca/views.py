@@ -3,8 +3,15 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Libro
 from django.core.mail import send_mail
 from apps.biblioteca.forms import FormularioContacto
+from django.http import Http404
 
 # Create your views here.
+
+def landing(request): # mandamos nuestra landing a la raiz 🔥🔥🔥
+    if request.method == 'GET':
+        return render(request, "landing/index.html")
+    else:
+        return Http404("Pagina no encontrada")
 
 def resultado(request):
     error = []
@@ -19,7 +26,7 @@ def resultado(request):
             return render(request, 'biblioteca/resultado_busqueda.html', {'libros':libros, 'query':q})
     return render(request, 'biblioteca/formulario_buscar.html', {'error':error})
 
-# def contactos(request):
+# def contactos(request): #version primitiva
 #     errors = []
 #     if request.method=='POST':
 #         if not request.POST.get('asunto',''):
@@ -34,7 +41,6 @@ def resultado(request):
 #     return render(request, 'biblioteca/formulario-contactos.html', {'errors': errors, 'mensaje':request.POST.get('mensaje', ''), 'email':request.POST.get('email',''), 'asunto':request.POST.get('asunto','')})
 
 def contactos(request):
-    erorr=[]
     if request.method == 'POST':
         form = FormularioContacto(request.POST)
         if form.is_valid():
