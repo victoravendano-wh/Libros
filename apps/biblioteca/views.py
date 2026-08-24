@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Libro
 from django.core.mail import send_mail
 from apps.biblioteca.forms import FormularioContacto, Formulario_libro
 from django.http import Http404
+from django.core.urlresolvers import reverse_lazy
 
 from django.views.generic import DeleteView, UpdateView, CreateView, TemplateView, ListView, View
 
@@ -87,6 +88,14 @@ def eliminar(request, offset):
         
     return render(request, 'biblioteca/eliminar_libro.html', {'libro':libro}) 
 
+def listar(request):
+    lista = Libro.objects.all().order_by('id')
+    if request.method == "GET":
+        if lista:
+            return render(request, 'biblioteca/lista.html', {'lista':lista})
+    
+    return Http404("Pagina no encontrada")
+
 
 class cbvresultado(View):
     error = []
@@ -112,3 +121,60 @@ class cbvlanding(View):
         return render(request, self.template_name)
     def post(self, request, *args, **kwargs):
         return Http404("Pagina no encontrada")
+    
+    
+class cbvcontactos(View):
+    def post(self, request, *args, **kwargs):
+        form = FormularioContacto(request.POST)
+        if form.is_valid():
+            clenad_data = form.cleaned_data
+            send_mail(clenad_data['asunto'], clenad_data['mensaje'], clenad_data.get('email', 'noreply@example.com'), ['sitieowner@example.com'])
+            return HttpResponse("""<H1>Se ha mandado tu mensaje</H1> <a href="../cbv/contacto/" class="btn btn-primary">Atras</a>""")
+        else:
+            return render(request, 'biblioteca/formulario-contactos.html', {'form':form})
+    def get(self, request, *args, **kwargs):
+        form = FormularioContacto(initial={'asunto':'Adoto tu sitio!'})
+
+class cbvnuevo(View):
+    form = Formulario_libro()
+    def get(self, request, *args, **kwargs):
+        return render(request, 'biblioteca/formulario_libro.html', {'forms':self.form, 'titulo':'Nuevo'})
+    def post(self, request, *args, **kwargs):
+        form = Formulario_libro(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("app_libreria:cbv_busqueda")
+        else:
+            return render(request, 'biblioteca/formulario_libro.html', {'forms':form, 'titulo':'Nuevo'})
+        
+
+class cbveditar(View):
+        
+    
+    def get(self, request, *args, **kwargs):
+        libro = get_object_or_404(Libro, id=self.args[0])
+        form = Formulario_libro(instance=libro)
+        return render(request, 'biblioteca/formulario_libro.html', {'forms':form, 'titulo': 'Editar', "id":self.args[0]})  
+        
+        
+    def post(self, request, *args, **kwargs):
+        libro = get_object_or_404(Libro, id=self.args[0])
+        form = Formulario_libro(request.POST, request.FILES, instance=libro )
+        if form.is_valid():
+            form.save()
+            return redirect("app_libreria:cbv_busqueda")
+        else:
+            return render(request, 'biblioteca/formulario_libro.html', {'forms':form, 'titulo': 'Editar', "id":self.args[0]})
+          
+    
+class cbveliminar(DeleteView):
+    model = Libro
+    template_name = 'biblioteca/eliminar_libro.html'
+    success_url = reverse_lazy('app_libreria:cbv_busqueda')
+    
+class cbvlistar(ListView):
+    model = Libro
+    template_name = 'biblioteca/lista.html'
+    context_object_name = "lista"
+    def get_queryset(self):
+        return Libro.objects.all().order_by("id")

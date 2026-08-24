@@ -35,6 +35,9 @@
             <li>
               <a href="{% url "app_libreria:pagina-de-bienvenida" %}" class="nav-link {% block inicio %}d-none{% endblock inicio %}" >Inicio</a>
             </li>
+            <li class="nav-item">
+              <a href="{% url 'app_libreria:listar' %}" class="nav-link">Listar libros</a>
+            </li>
           </ul>
         </nav>
       </header>
