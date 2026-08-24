@@ -10,3 +10,4 @@ class FormularioContacto(forms.Form):
         if num_palabras < 4:
             raise forms.ValidationError("Se requieren minimo 4 palabras!")
         return mensaje
+    

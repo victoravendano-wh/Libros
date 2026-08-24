@@ -50,3 +50,5 @@ def contactos(request):
     else:
         form = FormularioContacto(initial={'asunto':'Adoto tu sitio!'})
     return render(request, 'biblioteca/formulario-contactos.html', {'form':form})            
+
+

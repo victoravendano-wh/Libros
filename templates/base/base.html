@@ -15,7 +15,7 @@
   </head>
   <body>
     
-      <header>
+      <header class="mb-4">
         <nav class="navbar navbar-expand-lg bg-body-tertiary bg-black p-0">
           <div class="container-fluid d-flex text-center text-bg-primary justify-content-center">
            <span class="navbar-brand mb-0 h1 text-light"> {% block header %}Bienvenido{% endblock %}</span>
@@ -28,6 +28,9 @@
             </li>
             <li class="nav-item">
               <a href="{% url 'app_libreria:contacto' %}" class="nav-link">Contacto</a>
+            </li>
+            <li>
+              <a href="{% url "app_libreria:pagina-de-bienvenida" %}" class="nav-link {% block inicio %}d-none{% endblock inicio %}" >Inicio</a>
             </li>
           </ul>
         </nav>

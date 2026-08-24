@@ -1,5 +1,7 @@
 {% extends 'base/base.html' %}
 
+{% block inicio %}d-block{% endblock inicio %}
+
 {% block title %}
   Buscar
 {% endblock %}
@@ -11,19 +13,20 @@
 {% block content %}
   {% if error %}
     <form action="" method="GET">
-      <div class="input-group-prepend">
-        <input type="text" name="q" class="form-control is-invalid" />
-        <input type="submit" value="buscar" />
-        {% for err in error %}
-          <div class="invalid-feedback">{{ err }}</div>
-        {% endfor %}
+      <div class="input-group-prepend d-flex mx-5">
+        <input type="text" name="q" class="form-control is-invalid me-3" placeholder="Burcar..." />
+        <input type="submit" value="buscar" class="btn btn-primary" />
       </div>
+      {% for err in error %}
+        <div class="invalid-feedback d-block mx-5">{{ err }}</div>
+      {% endfor %}
     </form>
   {% else %}
     <form action="" method="GET">
-      <div class="input-group-prepend"></div>
-      <input type="text" name="q" class="form-control" />
-      <input type="submit" value="buscar" />
+      <div class="input-group-prepend d-flex mx-5">
+        <input type="text" name="q" class="form-control me-3" placeholder="Burcar... " />
+        <input type="submit" value="buscar" class="btn btn-primary" />
+      </div>
     </form>
   {% endif %}
 {% endblock %}

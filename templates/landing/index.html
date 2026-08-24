@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load staticfiles %}
 
 
 {% block title %}
@@ -14,13 +15,25 @@
 
 {% endblock header %}
 
+
+
 {% block content %}
+
+<main>
+
+    <div class="d-flex justify-content-center">
+        <img src="{% static 'resources/images1.jpeg' %}" alt="imagen central de la web, representa unos libros">
+    </div>
+
+
+</main>
 
 
 {% endblock content %}
 
 
 {% block footer %}
-
-
+    <footer class="d-flex justify-content-center mt-5">
+        <h3>Bienvenido a la biblioteca digital</h3>
+    </footer>
 {% endblock footer %}

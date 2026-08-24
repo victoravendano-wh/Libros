@@ -1,26 +1,31 @@
 {% extends 'base/base.html' %}
 
+{% block inicio %}d-block{% endblock inicio %}
+
 {% block title %}
   Resultado de la busqueda
 {% endblock %}
 
 {% block header %}
-  <h2>Estas buscando {{ query }}</h2>
+  <h2>Resultado de la busqueda</h2>
 {% endblock %}
 
 {% block content %}
+  <h3 class="d-flex justify-content-center">Estas buscando "{{ query }}"</h3>
+
   {% if libros %}
-    <p>Libros encontrados: {{ libros|length }} libro{{ libros|pluralize }}</p>
+    <p class="mx-4">Libros encontrados: {{ libros|length }} libro{{ libros|pluralize }}</p>
     <ul>
       {% for libro in libros %}
-        <li>{{ libro.titulo }}</li>
+      <a href="" class="d-block text-decoration-none">{{ libro.titulo }}</a>
+      
       {% endfor %}
     </ul>
   {% else %}
-    <h3>No se encontraron resultados para esta consulta</h3>
+    <h4 class="mx-4">No se encontraron resultados para esta consulta</h4>
   {% endif %}
 {% endblock %}
 
 {% block footer %}
-  <a href="../../buscar" class="btn btn-primary">Atras</a>
+  <a href="{% url "app_libreria:busqueda" %}" class="btn btn-primary mx-4">Atras</a>
 {% endblock %}

@@ -1,5 +1,7 @@
 {% extends 'base/base.html' %}
 
+{% block inicio %}d-block{% endblock inicio %}
+
 {% block title %}
   Contacto
 {% endblock %}
@@ -60,7 +62,7 @@
       {{ form.mensaje.errors }}
     </div>
 
-    <input type="submit" value="Enviar" />
+    <input type="submit" value="Enviar" class="btn btn-primary" />
   </form>
 {% endblock %}
 
