@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+
+{% block inicio %}
+  d-block
+{% endblock %}
+
+{% block title %}
+  Nuevo libro
+{% endblock %}
+
+
+{% block header %}
+  <h2>{{titulo}}</h2>
+{% endblock %}
+
+
+{% block content %}
+  <main class="m-5">
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <fieldset>
+        <div class="d-flex justify-content-between">
+          <legend>Datos del libro</legend>
+          <a class="btn btn-danger" href="javascript:history.back()">Atras</a>
+        </div>
+        
+        {% for field in forms %}
+          <article class="d-flex">{{ field.label_tag }}
+            {{ field }}</article>
+          {% if field.errors %}
+            <div class="error-label invalid-feedback d-flex">{{ field.errors.0 }}</div>
+          {% endif %}
+
+          {% if field.name == 'portada' and field.value %}
+            <div class="mt-2">
+              <p>Imagen actual:</p>
+              <img src="{{ field.value.url }}" alt="Portada del libro" style="max-width: 150px; height: auto;" />
+            </div>
+          {% endif %}
+        {% endfor %}
+        <div class="d-flex justify-content-between">
+          <input type="submit" value="Guardar" class="btn btn-primary" />
+          {% if id %}<a class="btn btn-danger" href="{% url "app_libreria:eliminar_libro" id %}">Eliminar</a> {% endif %}
+          
+        </div>
+      </fieldset>
+    </form>
+  </main>
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

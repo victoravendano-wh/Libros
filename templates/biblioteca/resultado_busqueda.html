@@ -1,6 +1,8 @@
 {% extends 'base/base.html' %}
 
-{% block inicio %}d-block{% endblock inicio %}
+{% block inicio %}
+  d-block
+{% endblock %}
 
 {% block title %}
   Resultado de la busqueda
@@ -17,8 +19,7 @@
     <p class="mx-4">Libros encontrados: {{ libros|length }} libro{{ libros|pluralize }}</p>
     <ul>
       {% for libro in libros %}
-      <a href="" class="d-block text-decoration-none">{{ libro.titulo }}</a>
-      
+        <a href="{% url "app_libreria:editar_libro" libro.id %}" class="d-block text-decoration-none">{{ libro.titulo }}</a>
       {% endfor %}
     </ul>
   {% else %}
@@ -27,5 +28,8 @@
 {% endblock %}
 
 {% block footer %}
-  <a href="{% url "app_libreria:busqueda" %}" class="btn btn-primary mx-4">Atras</a>
+  <footer class="d-flex justify-content-between" >
+    <a href="{% url 'app_libreria:busqueda' %}" class="btn btn-primary mx-4">Atras</a>
+    <a href="{% url 'app_libreria:nuevo' %}" class="btn btn-primary mx-4">Añadir</a>
+  </footer>
 {% endblock %}

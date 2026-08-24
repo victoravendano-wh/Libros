@@ -1,9 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Libro
 from django.core.mail import send_mail
-from apps.biblioteca.forms import FormularioContacto
+from apps.biblioteca.forms import FormularioContacto, Formulario_libro
 from django.http import Http404
+
+from django.views.generic import DeleteView, UpdateView, CreateView, TemplateView, ListView, View
+
 
 # Create your views here.
 
@@ -51,4 +54,61 @@ def contactos(request):
         form = FormularioContacto(initial={'asunto':'Adoto tu sitio!'})
     return render(request, 'biblioteca/formulario-contactos.html', {'form':form})            
 
+def nuevo(request):
+    form = Formulario_libro()
+    if request.method == "POST":
+        form = Formulario_libro(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("app_libreria:busqueda")
+    return render(request, 'biblioteca/formulario_libro.html', {'forms':form, 'titulo':'Nuevo'})
 
+
+def editar(request, offset):
+    
+    libro = Libro.objects.get(id=offset)
+    form = Formulario_libro(instance=libro)
+    
+    if request.method =="POST":
+        form = Formulario_libro(request.POST, request.FILES, instance=libro )
+        if form.is_valid():
+            form.save()
+            return redirect("app_libreria:busqueda")
+    return render(request, 'biblioteca/formulario_libro.html', {'forms':form, 'titulo': 'Editar', "id":offset})
+
+def eliminar(request, offset):
+    libro = Libro.objects.get(id=offset)
+    
+    if request.method == "POST":
+        
+        libro.delete()
+        return redirect("app_libreria:busqueda")
+        
+        
+    return render(request, 'biblioteca/eliminar_libro.html', {'libro':libro}) 
+
+
+class cbvresultado(View):
+    error = []
+    template_name = "biblioteca/formulario_buscar.html"
+    def get(self,request, *args, **kwargs):          #Metodo GET
+        if 'q' in request.GET:
+            q = request.GET['q']
+            if not q:
+                self.error.append("No se han introducido parametros de busqueda")
+            elif len(q)>20:
+                self.error.append("Introduce un termino menor a 20 caracteres")
+            else:
+                libros = Libro.objects.filter(titulo__icontains=q)
+                return render(request, 'biblioteca/resultado_busqueda.html', {'libros':libros, 'query':q})
+        return render(request, 'biblioteca/formulario_buscar.html', {'error':self.error})
+    def post(self, request, *args, **kwargs):
+        return Http404("Pagina no encontrada")
+    
+    
+class cbvlanding(View):
+    template_name = 'landing/index.html'
+    def get(self, request):
+        return render(request, self.template_name)
+    def post(self, request, *args, **kwargs):
+        return Http404("Pagina no encontrada")
