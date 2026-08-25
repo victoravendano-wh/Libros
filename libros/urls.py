@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.views.i18n import javascript_catalog
 
 
+
 # from .views import hola, fecha_actual
 from .views import fecha_actual, horas_adelante
 
@@ -35,4 +36,9 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
+    import debug_toolbar
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

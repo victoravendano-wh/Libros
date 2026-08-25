@@ -16,7 +16,7 @@ def landing(request): # mandamos nuestra landing a la raiz 🔥🔥🔥
     if request.method == 'GET':
         return render(request, "landing/index.html")
     else:
-        return Http404("Pagina no encontrada")
+        raise Http404("Pagina no encontrada")
 
 def resultado(request):
     error = []
@@ -101,7 +101,7 @@ class Cbvresultado(View):
                 return render(request, 'cbvbiblioteca/resultado_busqueda.html', {'libros':libros, 'query':q})
         return render(request, 'cbvbiblioteca/formulario_buscar.html', {'error':self.error})
     def post(self, request, *args, **kwargs):
-        return Http404("Pagina no encontrada")
+        raise Http404("Pagina no encontrada")
     
     
 class Cbvlanding(View):
@@ -109,7 +109,7 @@ class Cbvlanding(View):
     def get(self, request):
         return render(request, self.template_name)
     def post(self, request, *args, **kwargs):
-        return Http404("Pagina no encontrada")
+        raise Http404("Pagina no encontrada")
     
     
 class Cbvcontactos(View):
