@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from apps.biblioteca.forms import FormularioContacto, Formulario_libro
 from django.http import Http404
 from django.core.urlresolvers import reverse_lazy
+from django.contrib import messages
 
 from django.views.generic import DeleteView, ListView, View
 
@@ -30,20 +31,6 @@ def resultado(request):
             return render(request, 'biblioteca/resultado_busqueda.html', {'libros':libros, 'query':q})
     return render(request, 'biblioteca/formulario_buscar.html', {'error':error})
 
-# def contactos(request): #version primitiva
-#     errors = []
-#     if request.method=='POST':
-#         if not request.POST.get('asunto',''):
-#             errors.append('Por favor introduce el asunto')
-#         if not request.POST.get('mensaje',''):
-#             errors.append('Por favor introduce un mensaje')
-#         if request.POST.get('email') and '@' not in request.POST['email']:
-#             errors.append('Por favor introduce una direccion de correo valida')
-#         if not errors:
-#             send_mail(request.POST['asunto'], request.POST['mensaje'], request.POST.get('email', 'noreply@example.com'), ['siteowner@example.com'],)
-#             return HttpResponseRedirect('/contactos/gracias/')
-#     return render(request, 'biblioteca/formulario-contactos.html', {'errors': errors, 'mensaje':request.POST.get('mensaje', ''), 'email':request.POST.get('email',''), 'asunto':request.POST.get('asunto','')})
-
 def contactos(request):
     if request.method == 'POST':
         form = FormularioContacto(request.POST)
@@ -61,6 +48,7 @@ def nuevo(request):
         form = Formulario_libro(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, "Nuevo libro agregado a la libreria")
             return redirect("app_libreria:listar")
     return render(request, 'biblioteca/formulario_libro.html', {'forms':form, 'titulo':'Nuevo'})
 
@@ -74,6 +62,7 @@ def editar(request, offset):
         form = Formulario_libro(request.POST, request.FILES, instance=libro )
         if form.is_valid():
             form.save()
+            messages.success(request, "Libro actualizado correctamente")
             return redirect("app_libreria:listar")
     return render(request, 'biblioteca/formulario_libro.html', {'forms':form, 'titulo': 'Editar', "id":offset})
 
@@ -83,6 +72,7 @@ def eliminar(request, offset):
     if request.method == "POST":
         
         libro.delete()
+        messages.warning(request, "Se ha eliminado un libro de la libreria")
         return redirect("app_libreria:listar")
         
         
@@ -145,6 +135,7 @@ class Cbvnuevo(View):
         form = Formulario_libro(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, "Nuevo libro agregado a la libreria")
             return redirect("app_libreria:cbv_listar")
         else:
             return render(request, 'cbvbiblioteca/formulario_libro.html', {'forms':form, 'titulo':'Nuevo'})
@@ -164,6 +155,7 @@ class Cbveditar(View):
         form = Formulario_libro(request.POST, request.FILES, instance=libro )
         if form.is_valid():
             form.save()
+            messages.success(request, "Libro actualizado correctamente")
             return redirect("app_libreria:cbv_listar")
         else:
             return render(request, 'cbvbiblioteca/formulario_libro.html', {'forms':form, 'titulo': 'Editar', "id":self.args[0]})
@@ -173,6 +165,10 @@ class Cbveliminar(DeleteView):
     model = Libro
     template_name = 'cbvbiblioteca/eliminar_libro.html'
     success_url = reverse_lazy('app_libreria:cbv_listar')
+    
+    def post(self, *args, **kwargs):
+        messages.warning(self.request, "Se ha eliminado un libro de la libreria")
+        return super().post(self, *args, **kwargs)
     
 class Cbvlistar(ListView):
     model = Libro

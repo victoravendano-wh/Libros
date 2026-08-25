@@ -5,14 +5,12 @@
 {% endblock %}
 
 {% block title %}
-  Nuevo libro
+  FBV Nuevo libro
 {% endblock %}
-
 
 {% block header %}
-  {{titulo}}
+  FBV {{ titulo }}
 {% endblock %}
-
 
 {% block content %}
   <main class="m-5">
@@ -24,12 +22,12 @@
           <legend>Datos del libro</legend>
           <a class="btn btn-danger m-3" href="javascript:history.back()">Atras</a>
         </div>
-        
+
         {% for field in forms %}
-          <article class="d-flex">{{ field.label_tag }}
+          <article class="d-block">{{ field.label_tag }}
             {{ field }}</article>
           {% if field.errors %}
-            <div class="error-label invalid-feedback d-flex">{{ field.errors.0 }}</div>
+            <div class="error-label invalid-feedback d-block">{{ field.errors.0 }}</div>
           {% endif %}
 
           {% if field.name == 'portada' and field.value %}
@@ -41,8 +39,9 @@
         {% endfor %}
         <div class="d-flex justify-content-between">
           <input type="submit" value="Guardar" class="btn btn-primary m-3" />
-          {% if id %}<a class="btn btn-danger m-3" href="{% url "app_libreria:eliminar_libro" id %}">Eliminar</a> {% endif %}
-          
+          {% if id %}
+            <a class="btn btn-danger m-3" href="{% url 'app_libreria:eliminar_libro' id %}">Eliminar</a>
+          {% endif %}
         </div>
       </fieldset>
     </form>
@@ -50,5 +49,8 @@
 {% endblock %}
 
 {% block footer %}
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('id_autores').classList = 'form-control mb-4'
+  </script>
 {% endblock %}

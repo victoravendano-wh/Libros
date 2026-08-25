@@ -4,9 +4,9 @@ from django.contrib.admin.widgets import FilteredSelectMultiple
 
 
 class FormularioContacto(forms.Form):
-    asunto = forms.CharField(max_length=100)
-    email = forms.EmailField(required=False)
-    mensaje = forms.CharField(widget=forms.Textarea, max_length=200)
+    asunto = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class':'form-control mb-3'}))
+    email = forms.EmailField(required=False, widget=forms.TextInput(attrs={'class':'form-control mb-3'}))
+    mensaje = forms.CharField(widget=forms.Textarea(attrs={'class':'form-control mb-3'}), max_length=200)
     def clean_mensaje(self):
         mensaje = self.cleaned_data['mensaje']
         num_palabras = len(mensaje.split())
@@ -33,8 +33,8 @@ class Formulario_libro(forms.ModelForm):
             "portada": "Portada",
         }   
         widgets = {
-            "titulo": forms.TextInput(attrs={'class':'form-control d-block  mb-3'}),
-            "autores": FilteredSelectMultiple("Autores", is_stacked=False, attrs={'class': 'custom-checkbox-list d-block mb-3'}),
-            "editor": forms.Select(attrs={'size': '5', 'class':'form-control d-block  mb-3'}), 
-            "fecha_publicada": forms.DateInput(),          
+            "titulo": forms.TextInput(attrs={'class':'form-control d-block  mb-3','style':'width:700px;'}),
+            "autores": FilteredSelectMultiple("Autores", is_stacked=False, attrs={'multiple':'true','class': 'form-control','style':'width:700px;'}),
+            "editor": forms.Select(attrs={'size': '5', 'class':'form-control d-block  mb-3','style':'width:700px;'}), 
+            "fecha_publicada": forms.DateInput( attrs={'class':'form-control mb-3', 'style':'width:300px; '}),          
         }  

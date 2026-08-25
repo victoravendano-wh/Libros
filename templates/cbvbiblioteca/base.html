@@ -12,6 +12,14 @@
 
       {% endblock %}
     </title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.1.7/js/dataTables.bootstrap5.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
   </head>
   <body>
@@ -42,11 +50,7 @@
           <li>
             <a href="{% url 'app_libreria:cbv_pagina-de-bienvenida' %}"
               class="nav-link {% block inicio %}
-                
-                
                 d-none
-
-
               {% endblock %}">
               Inicio
             </a>
@@ -65,7 +69,11 @@
         </ul>
       </nav>
     </header>
-
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} m-3">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
     {% block content %}
 
     {% endblock %}
@@ -73,6 +81,6 @@
     {% block footer %}
       <p>Gracias por visitar mi sitio web</p>
     {% endblock %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   </body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </html>
