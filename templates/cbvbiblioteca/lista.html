@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %}
+{% extends 'cbvbiblioteca/base.html' %}
 
 {% block inicio %}
   d-block
@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block header %}
-  listado de libros
+  CBV Listado de libros
 {% endblock %}
 
 {% block content %}
@@ -38,8 +38,8 @@
               <td>{{ libro.fecha_publicada }}</td>
               <td>
                 <div class="d-flex justify-content-between">
-                  <a class="btn btn-danger mx-3" href="{% url 'app_libreria:eliminar_libro' libro.id %}">Eliminar</a>
-                  <a href="{% url 'app_libreria:editar_libro' libro.id %}" class="d-block btn btn-primary mx-3">Editar</a>
+                  <a class="btn btn-danger mx-3" href="{% url 'app_libreria:cbv_eliminar_libro' libro.id %}">Eliminar</a>
+                  <a href="{% url 'app_libreria:cbv_editar_libro' libro.id %}" class="d-block btn btn-primary mx-3">Editar</a>
                 </div>
               </td>
             </tr>
@@ -54,7 +54,7 @@
 
 {% block footer %}
   <footer class="d-flex justify-content-between">
-    <a href="{% url 'app_libreria:busqueda' %}" class="btn btn-primary mx-4">Atras</a>
-    <a href="{% url 'app_libreria:nuevo' %}" class="btn btn-primary mx-4">Añadir</a>
+    <a href="{% url 'app_libreria:cbv_busqueda' %}" class="btn btn-primary mx-4">Atras</a>
+    <a href="{% url 'app_libreria:cbv_nuevo' %}" class="btn btn-primary mx-4">Añadir</a>
   </footer>
 {% endblock %}

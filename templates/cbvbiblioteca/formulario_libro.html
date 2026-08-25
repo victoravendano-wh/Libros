@@ -1,16 +1,16 @@
-{% extends 'base/base.html' %}
+{% extends 'cbvbiblioteca/base.html' %}
 
 {% block inicio %}
   d-block
 {% endblock %}
 
 {% block title %}
-  Nuevo libro
+  CBV Nuevo libro
 {% endblock %}
 
 
 {% block header %}
-  {{titulo}}
+  CBV {{titulo}}
 {% endblock %}
 
 
@@ -41,7 +41,7 @@
         {% endfor %}
         <div class="d-flex justify-content-between">
           <input type="submit" value="Guardar" class="btn btn-primary m-3" />
-          {% if id %}<a class="btn btn-danger m-3" href="{% url "app_libreria:eliminar_libro" id %}">Eliminar</a> {% endif %}
+          {% if id %}<a class="btn btn-danger m-3" href="{% url "app_libreria:cbv_eliminar_libro" id %}">Eliminar</a> {% endif %}
           
         </div>
       </fieldset>
