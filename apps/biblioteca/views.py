@@ -81,10 +81,9 @@ def eliminar(request, offset):
 def listar(request):
     lista = Libro.objects.all().order_by('id')
     if request.method == "GET":
-        if lista:
-            return render(request, 'biblioteca/lista.html', {'lista':lista})
+        return render(request, 'biblioteca/lista.html', {'lista':lista})
     
-    return Http404("Pagina no encontrada")
+    raise Http404("Pagina no encontrada")
 
 
 class Cbvresultado(View):
