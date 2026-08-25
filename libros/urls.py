@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.i18n import javascript_catalog
 
 
 # from .views import hola, fecha_actual
@@ -29,6 +30,7 @@ urlpatterns = [
     url(r'^fecha/$', fecha_actual, name="hora-actual"),
     url(r'^fecha/mas/(\d{1,2})/$', horas_adelante, name="fecha-adelantada"),
     url(r'^', include('apps.biblioteca.urls', namespace="app_libreria")),
+    url(r'^admin/jsi18n/$', javascript_catalog, {'packages': ('django.contrib.admin',)}, name='javascript-catalog'),
 
 ]
 

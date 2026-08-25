@@ -1,5 +1,7 @@
 from django import forms
 from apps.biblioteca.models import Libro
+from django.contrib.admin.widgets import FilteredSelectMultiple
+
 
 class FormularioContacto(forms.Form):
     asunto = forms.CharField(max_length=100)
@@ -30,9 +32,9 @@ class Formulario_libro(forms.ModelForm):
             "fecha_publicada": "Fecha de publicacion",
             "portada": "Portada",
         }   
-        # widgets = {
-        #     "titulo": forms.TextInput(attrs={'class':'form-control d-block'}),
-        #     "autores": forms.CheckboxSelectMultiple(attrs={'class': 'custom-checkbox-list d-block'}),
-        #     "editor": forms.RadioSelect(attrs={'class':'category-radio-group d-block'}),
-        #     "fecha_publicada": forms.DateInput(),          
-        # }  
+        widgets = {
+            "titulo": forms.TextInput(attrs={'class':'form-control d-block  mb-3'}),
+            "autores": FilteredSelectMultiple("Autores", is_stacked=False, attrs={'class': 'custom-checkbox-list d-block mb-3'}),
+            "editor": forms.Select(attrs={'size': '5', 'class':'form-control d-block  mb-3'}), 
+            "fecha_publicada": forms.DateInput(),          
+        }  
